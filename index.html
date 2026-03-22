@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OXIX | Fuel Your Cravings - Official Menu</title>
+    <style>
+        :root {
+            --primary-yellow: #ffcc00;
+            --dark-black: #0a0a0a;
+            --light-black: #1a1a1a;
+            --white: #ffffff;
+            --whatsapp-green: #25d366;
+            --call-blue: #3498db;
+            --red-cancel: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--dark-black); color: var(--white); padding-bottom: 220px; }
+
+        header {
+            background-color: var(--primary-yellow); color: var(--dark-black);
+            padding: 20px 10px; text-align: center; position: sticky; top: 0; z-index: 2000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        header h1 { font-size: 3rem; line-height: 1; }
+        header p { font-size: 0.9rem; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+
+        .nav-links {
+            display: flex; gap: 10px; background: #222; padding: 12px 15px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            position: sticky; top: 102px; z-index: 1999; border-bottom: 2px solid var(--primary-yellow);
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-links a {
+            color: var(--primary-yellow); text-decoration: none; font-size: 0.7rem;
+            text-transform: uppercase; border: 1px solid var(--primary-yellow);
+            padding: 8px 15px; border-radius: 25px; white-space: nowrap; flex: 0 0 auto;
+        }
+
+        .container { max-width: 1100px; margin: auto; padding: 20px; }
+        h2 { text-align: center; color: var(--primary-yellow); margin: 40px 0 20px; text-transform: uppercase; border-bottom: 2px solid var(--primary-yellow); padding-bottom: 10px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
+
+        .card {
+            background: var(--light-black); padding: 15px; border-radius: 12px; border: 1px solid #333;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card h3 { color: var(--primary-yellow); margin-bottom: 5px; font-size: 0.95rem; }
+        .card p { font-size: 0.7rem; color: #ccc; margin-bottom: 10px; font-family: sans-serif; line-height: 1.3; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
+        .price-tag { font-weight: bold; color: var(--white); font-size: 1.1rem;}
+
+        .add-btn {
+            background: var(--primary-yellow); color: black; border: none; padding: 8px 12px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; text-transform: uppercase;
+        }
+
+        .pizza-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-family: sans-serif; }
+        .pizza-table td { padding: 8px 0; border-bottom: 1px solid #333; font-size: 0.8rem; }
+
+        .action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 10, 10, 0.98); padding: 15px; z-index: 3000; border-top: 1px solid #333; }
+        .action-row { display: flex; gap: 10px; margin-bottom: 10px; max-width: 500px; margin: 0 auto 10px; }
+        .btn-float { flex: 1; padding: 12px; border-radius: 50px; font-weight: bold; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; color: white; border: none; font-size: 0.85rem; text-decoration: none; cursor: pointer; }
+        .wa-btn { background: var(--whatsapp-green); width: 100%; max-width: 500px; margin: 0 auto; display: flex; }
+        .call-btn { background: var(--call-blue); }
+        .reset-btn { background: var(--red-cancel); }
+        #cart-count { background: white; color: black; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; margin-left: 5px; font-weight: bold;}
+
+        #toast { visibility: hidden; min-width: 250px; background-color: #2ecc71; color: white; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 5000; left: 50%; bottom: 180px; transform: translateX(-50%); font-weight: bold; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 120px; opacity: 0;} to {bottom: 150px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 150px; opacity: 1;} to {bottom: 120px; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+    <div id="toast">Item Added! ✅</div>
+
+    <header>
+        <h1>OXIX</h1>
+        <p>FUEL YOUR CRAVING</p>
+        <p style="font-size: 0.8rem; margin-top: 5px;">+92 345 7588169</p>
+    </header>
+
+    <div class="nav-links">
+        <a href="#deals1">Deals (1-8)</a>
+        <a href="#deals2">Deals (9-16)</a>
+        <a href="#pizzas">Pizza Menu</a>
+        <a href="#burgers">Burgers</a>
+        <a href="#wraps">Shawarma/Wraps</a>
+        <a href="#cheese">Cheese Corner</a>
+        <a href="#steaks">Steaks</a>
+        <a href="#fried">Fries & Fried</a>
+        <a href="#extras">Toppings/Dips</a>
+        <a href="#drinks">Drinks</a>
+    </div>
+
+    <div class="container">
+        
+        <h2 id="deals1">Exciting Deals (1-8)</h2>
+        <div class="grid">
+            <div class="card"><h3>DEAL 1 (430/-)</h3><p>1 Chicken Burger, 1/2 Fries, 1 Reg Drink</p><button class="add-btn" onclick="addToCart('Deal 1', 430)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 2 (550/-)</h3><p>1 Zinger Burger, 1/2 Fries, 1 Reg Drink</p><button class="add-btn" onclick="addToCart('Deal 2', 550)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 3 (850/-)</h3><p>1 Tower Burger, Full Fries, 1 Reg Drink</p><button class="add-btn" onclick="addToCart('Deal 3', 850)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 4 (1050/-)</h3><p>1 Small Pizza, 5 wings, 1/2 Fries, 1/2L Drink</p><button class="add-btn" onclick="addToCart('Deal 4', 1050)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 5 (1200/-)</h3><p>1 Small Pizza, 1/2 Nuggets, 1/2 Wings, 1L Drink</p><button class="add-btn" onclick="addToCart('Deal 5', 1200)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 6 (1300/-)</h3><p>2 Zinger, 1/2 Nuggets, 1/2 Wings, 1/2L Drink</p><button class="add-btn" onclick="addToCart('Deal 6', 1300)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 7 (1450/-)</h3><p>10 Nuggets, 10 wings, Full Fries, 1L Drink</p><button class="add-btn" onclick="addToCart('Deal 7', 1450)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 8 (1650/-)</h3><p>10 Wings, 10 nuggets, 10 shots, 1L Drink</p><button class="add-btn" onclick="addToCart('Deal 8', 1650)">+ ADD</button></div>
+        </div>
+
+        <h2 id="deals2">Mega Deals (9-16)</h2>
+        <div class="grid">
+            <div class="card"><h3>DEAL 9 (1700/-)</h3><p>1 Medium Pizza, 10 wings, 1L Drink</p><button class="add-btn" onclick="addToCart('Deal 9', 1700)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 10 (2100/-)</h3><p>1 Med Pizza, 1 Loaded Fries, 1 Pizza Fries, 1L Drink</p><button class="add-btn" onclick="addToCart('Deal 10', 2100)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 11 (2750/-)</h3><p>6 Zinger, 2 Full Fries, 1.5L Drink</p><button class="add-btn" onclick="addToCart('Deal 11', 2750)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 12 (3500/-)</h3><p>1 Fam Pizza, 10 Wings, 10 Nuggets, 2 Full Fries, 1.5L</p><button class="add-btn" onclick="addToCart('Deal 12', 3500)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 13 (3600/-)</h3><p>1 Large Pizza, 5 Zinger, 1 Full Fries, 1.5L Drink</p><button class="add-btn" onclick="addToCart('Deal 13', 3600)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 14 (3550/-)</h3><p>2 Large Pizza, 2 Full Fries, 1.5L Drink</p><button class="add-btn" onclick="addToCart('Deal 14', 3550)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 15 (4500/-)</h3><p>1 Lg Donner, 1 Med Donner, 3 Fries, 1.5L</p><button class="add-btn" onclick="addToCart('Deal 15', 4500)">+ ADD</button></div>
+            <div class="card"><h3>DEAL 16 (4750/-)</h3><p>1 Shahi Pizza, 1 Med Pizza, 3 Loaded Fries, 1.5L</p><button class="add-btn" onclick="addToCart('Deal 16', 4750)">+ ADD</button></div>
+        </div>
+
+        <h2 id="pizzas">Pizza Menu</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>CLASSIC FLAVORS</h3>
+                <p>Tikka, Fajita, Beef Supreme, Bihari Tikka</p>
+                <table class="pizza-table">
+                    <tr><td>S (8") - 599</td><td><button class="add-btn" onclick="addToCart('S Classic Pizza', 599)">ADD</button></td></tr>
+                    <tr><td>M (12") - 1099</td><td><button class="add-btn" onclick="addToCart('M Classic Pizza', 1099)">ADD</button></td></tr>
+                    <tr><td>L (14") - 1499</td><td><button class="add-btn" onclick="addToCart('L Classic Pizza', 1499)">ADD</button></td></tr>
+                    <tr><td>F (18") - 1899</td><td><button class="add-btn" onclick="addToCart('F Classic Pizza', 1899)">ADD</button></td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h3>SPECIAL FLAVORS</h3>
+                <p>Oxix Special, Half & Half, Supreme Pizza</p>
+                <table class="pizza-table">
+                    <tr><td>S (8") - 699</td><td><button class="add-btn" onclick="addToCart('S Special Pizza', 699)">ADD</button></td></tr>
+                    <tr><td>M (12") - 1199</td><td><button class="add-btn" onclick="addToCart('M Special Pizza', 1199)">ADD</button></td></tr>
+                    <tr><td>L (14") - 1599</td><td><button class="add-btn" onclick="addToCart('L Special Pizza', 1599)">ADD</button></td></tr>
+                    <tr><td>F (18") - 1999</td><td><button class="add-btn" onclick="addToCart('F Special Pizza', 1999)">ADD</button></td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h3>SIGNATURE FLAVORS</h3>
+                <p>Creamy Ranch, Dubai Special, Malai Boti</p>
+                <table class="pizza-table">
+                    <tr><td>S (8") - 750</td><td><button class="add-btn" onclick="addToCart('S Signature Pizza', 750)">ADD</button></td></tr>
+                    <tr><td>M (12") - 1350</td><td><button class="add-btn" onclick="addToCart('M Signature Pizza', 1350)">ADD</button></td></tr>
+                    <tr><td>L (14") - 1750</td><td><button class="add-btn" onclick="addToCart('L Signature Pizza', 1750)">ADD</button></td></tr>
+                    <tr><td>F (18") - 2150</td><td><button class="add-btn" onclick="addToCart('F Signature Pizza', 2150)">ADD</button></td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h3>DONNER PIZZA</h3>
+                <p>Tex Mex Chicken & Three Sauce Blend</p>
+                <table class="pizza-table">
+                    <tr><td>S (12") - 1300</td><td><button class="add-btn" onclick="addToCart('S Donner Pizza', 1300)">ADD</button></td></tr>
+                    <tr><td>M (14") - 1700</td><td><button class="add-btn" onclick="addToCart('M Donner Pizza', 1700)">ADD</button></td></tr>
+                    <tr><td>L (18") - 2200</td><td><button class="add-btn" onclick="addToCart('L Donner Pizza', 2200)">ADD</button></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <h2 id="burgers">Burgers</h2>
+        <div class="grid">
+            <div class="card"><h3>GRILL BURGER</h3><div class="price-row"><span class="price-tag">449/-</span><button class="add-btn" onclick="addToCart('Grill Burger', 449)">+ ADD</button></div></div>
+            <div class="card"><h3>FILLET BURGER</h3><div class="price-row"><span class="price-tag">400/-</span><button class="add-btn" onclick="addToCart('Fillet Burger', 400)">+ ADD</button></div></div>
+            <div class="card"><h3>BEEF BURGER</h3><div class="price-row"><span class="price-tag">499/-</span><button class="add-btn" onclick="addToCart('Beef Burger', 499)">+ ADD</button></div></div>
+            <div class="card"><h3>PETTY BURGER</h3><div class="price-row"><span class="price-tag">360/-</span><button class="add-btn" onclick="addToCart('Petty Burger', 360)">+ ADD</button></div></div>
+            <div class="card"><h3>ZINGER BURGER</h3><div class="price-row"><span class="price-tag">380/-</span><button class="add-btn" onclick="addToCart('Zinger Burger', 380)">+ ADD</button></div></div>
+            <div class="card"><h3>DOUBLE DECKER</h3><div class="price-row"><span class="price-tag">599/-</span><button class="add-btn" onclick="addToCart('Double Decker', 599)">+ ADD</button></div></div>
+            <div class="card"><h3>STAKE BURGER</h3><div class="price-row"><span class="price-tag">599/-</span><button class="add-btn" onclick="addToCart('Stake Burger', 599)">+ ADD</button></div></div>
+            <div class="card"><h3>TOWER BURGER</h3><div class="price-row"><span class="price-tag">580/-</span><button class="add-btn" onclick="addToCart('Tower Burger', 580)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="wraps">Shawarma & Wraps</h2>
+        <div class="grid">
+            <div class="card"><h3>CHICKEN SHAWARMA</h3><div class="price-row"><span class="price-tag">330/-</span><button class="add-btn" onclick="addToCart('Chicken Shawarma', 330)">+ ADD</button></div></div>
+            <div class="card"><h3>ZINGER SHAWARMA</h3><div class="price-row"><span class="price-tag">380/-</span><button class="add-btn" onclick="addToCart('Zinger Shawarma', 380)">+ ADD</button></div></div>
+            <div class="card"><h3>ZINGER WRAP</h3><div class="price-row"><span class="price-tag">490/-</span><button class="add-btn" onclick="addToCart('Zinger Wrap', 490)">+ ADD</button></div></div>
+            <div class="card"><h3>DONNER SHAWARMA</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Donner Shawarma', 500)">+ ADD</button></div></div>
+            <div class="card"><h3>ARABIAN WRAP</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Arabian Wrap', 500)">+ ADD</button></div></div>
+            <div class="card"><h3>TURKISH WRAP</h3><div class="price-row"><span class="price-tag">550/-</span><button class="add-btn" onclick="addToCart('Turkish Wrap', 550)">+ ADD</button></div></div>
+            <div class="card"><h3>OPEN PLATTER</h3><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Open Platter Shawarma', 600)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="cheese">Cheese Corner</h2>
+        <div class="grid">
+            <div class="card"><h3>ALFREDO PASTA</h3><p>Full Size</p><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Alfredo Pasta', 600)">+ ADD</button></div></div>
+            <div class="card"><h3>CREAMY PASTA</h3><p>Full Size</p><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Creamy Pasta', 600)">+ ADD</button></div></div>
+            <div class="card"><h3>CHEESE STICK</h3><p>8 Pieces</p><div class="price-row"><span class="price-tag">550/-</span><button class="add-btn" onclick="addToCart('Cheese Stick', 550)">+ ADD</button></div></div>
+            <div class="card"><h3>PANINI SANDWICH</h3><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Panini Sandwich', 600)">+ ADD</button></div></div>
+            <div class="card"><h3>GRILL SANDWICH</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Grill Sandwich', 500)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="steaks">Chicken Steaks</h2>
+        <div class="grid">
+            <div class="card"><h3>WHITE SAUCE STEAK</h3><div class="price-row"><span class="price-tag">850/-</span><button class="add-btn" onclick="addToCart('White Sauce Steak', 850)">+ ADD</button></div></div>
+            <div class="card"><h3>MEXICAN STEAK</h3><div class="price-row"><span class="price-tag">850/-</span><button class="add-btn" onclick="addToCart('Mexican Steak', 850)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="fried">Fries & Fried Items</h2>
+        <div class="grid">
+            <div class="card"><h3>PLAIN FRIES</h3><div class="price-row"><span class="price-tag">270/-</span><button class="add-btn" onclick="addToCart('Plain Fries', 270)">+ ADD</button></div></div>
+            <div class="card"><h3>MAYO FRIES</h3><div class="price-row"><span class="price-tag">300/-</span><button class="add-btn" onclick="addToCart('Mayo Fries', 300)">+ ADD</button></div></div>
+            <div class="card"><h3>LOADED FRIES</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Loaded Fries', 500)">+ ADD</button></div></div>
+            <div class="card"><h3>PIZZA FRIES</h3><div class="price-row"><span class="price-tag">550/-</span><button class="add-btn" onclick="addToCart('Pizza Fries', 550)">+ ADD</button></div></div>
+            <div class="card"><h3>BUFFALO WINGS (10Pc)</h3><div class="price-row"><span class="price-tag">650/-</span><button class="add-btn" onclick="addToCart('Buffalo Wings', 650)">+ ADD</button></div></div>
+            <div class="card"><h3>NUGGETS (10Pc)</h3><div class="price-row"><span class="price-tag">550/-</span><button class="add-btn" onclick="addToCart('Nuggets 10Pc', 550)">+ ADD</button></div></div>
+            <div class="card"><h3>CHICKEN CHIPS</h3><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Chicken Chips', 600)">+ ADD</button></div></div>
+            <div class="card"><h3>DRUMSTICKS (6Pc)</h3><div class="price-row"><span class="price-tag">850/-</span><button class="add-btn" onclick="addToCart('Drumsticks 6Pc', 850)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="extras">Toppings & Dips</h2>
+        <div class="grid">
+            <div class="card"><h3>EXTRA TOPPINGS</h3><p>Corn / Jalapeno / Mushroom / Olives</p><div class="price-row"><span class="price-tag">50/-</span><button class="add-btn" onclick="addToCart('Extra Topping', 50)">+ ADD</button></div></div>
+            <div class="card"><h3>EXTRA CHEESE</h3><div class="price-row"><span class="price-tag">70/-</span><button class="add-btn" onclick="addToCart('Extra Cheese', 70)">+ ADD</button></div></div>
+            <div class="card"><h3>SPECIAL DIPS</h3><p>Garlic / Spico / Oxix / Butter / Gelo</p><div class="price-row"><span class="price-tag">70/-</span><button class="add-btn" onclick="addToCart('Special Dip', 70)">+ ADD</button></div></div>
+        </div>
+
+        <h2 id="drinks">Drinks</h2>
+        <div class="grid">
+            <div class="card"><h3>REGULAR DRINK</h3><div class="price-row"><span class="price-tag">90/-</span><button class="add-btn" onclick="addToCart('Reg Drink', 90)">+ ADD</button></div></div>
+            <div class="card"><h3>1.5 LITER DRINK</h3><div class="price-row"><span class="price-tag">230/-</span><button class="add-btn" onclick="addToCart('1.5L Drink', 230)">+ ADD</button></div></div>
+        </div>
+
+    </div>
+
+    <div class="action-bar">
+        <div class="action-row">
+            <a href="tel:+923457588169" class="btn-float call-btn">📞 CALL NOW</a>
+            <button onclick="clearCart()" class="btn-float reset-btn">🗑️ RESET</button>
+        </div>
+        <button onclick="sendWhatsApp()" class="btn-float wa-btn">
+            🟢 SEND ORDER (<span id="cart-count">0</span>)
+        </button>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name,price) {
+            cart.push({ name: name, price: price });
+            total += price;
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            const toast = document.getElementById("toast");
+            toast.innerText = name + " Added! ✅";
+            toast.className = "show";
+            setTimeout(() => { toast.className = ""; }, 2000);
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            if (confirm("Clear your entire order?")) {
+                cart = [];
+                total = 0;
+                document.getElementById('cart-count').innerText = "0";
+                alert("Order Reset.");
+            }
+        }
+
+        function sendWhatsApp() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            const phone = "923457588169";
+            let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
+            cart.forEach((item, i) => {
+                orderText += `*${i + 1}.* ${item.name} - Rs ${item.price}%0A`;
+            });
+            orderText += `%0A--------------------------%0A*TOTAL BILL: Rs ${total}*%0A--------------------------%0A%0APlease confirm my order!`;
+            window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
+        }
+    </script>
+</body>
+</html>
