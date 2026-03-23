@@ -351,45 +351,60 @@
             🟢 SEND ORDER (<span id="cart-count">0</span>)
         </button>
     </div>
+<script>
+    let cart = [];
+    let total = 0;
 
-    <script>
-        let cart = [];
-        let total = 0;
+    // 1. New function for Pizzas to capture the selected flavor
+    function addPizzaToCart(selectId, size, price) {
+        const flavor = document.getElementById(selectId).value;
+        const fullName = `${flavor} Pizza (${size})`; // Combines Flavor + Size
+        addToCart(fullName, price);
+    }
 
-        function addToCart(name,price) {
-            cart.push({ name: name, price: price });
-            total += price;
-            document.getElementById('cart-count').innerText = cart.length;
-            
-            const toast = document.getElementById("toast");
-            toast.innerText = name + " Added! ✅";
-            toast.className = "show";
-            setTimeout(() => { toast.className = ""; }, 2000);
+    // 2. Standard function for all items
+    function addToCart(name, price) {
+        cart.push({ name: name, price: price });
+        total += price;
+        
+        document.getElementById('cart-count').innerText = cart.length;
+        
+        const toast = document.getElementById('toast');
+        toast.innerText = `Added: ${name} ✅`;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+    }
+
+    // 3. Function to clear the cart
+    function clearCart() {
+        if (cart.length === 0) return;
+        if (confirm("Clear your entire order?")) {
+            cart = [];
+            total = 0;
+            document.getElementById('cart-count').innerText = "0";
+            alert("Order Reset.");
+        }
+    }
+
+    // 4. Enhanced WhatsApp function
+    function sendWhatsApp() {
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
         }
 
-        function clearCart() {
-            if (cart.length === 0) return;
-            if (confirm("Clear your entire order?")) {
-                cart = [];
-                total = 0;
-                document.getElementById('cart-count').innerText = "0";
-                alert("Order Reset.");
-            }
-        }
-
-        function sendWhatsApp() {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-            const phone = "923457588169";
-            let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
-            cart.forEach((item, i) => {
-                orderText += `*${i + 1}.* ${item.name} - Rs ${item.price}%0A`;
-            });
-            orderText += `%0A--------------------------%0A*TOTAL BILL: Rs ${total}*%0A--------------------------%0A%0APlease confirm my order!`;
-            window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
-        }
-    </script>
+        const phone = "923457588169";
+        let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
+        
+        cart.forEach((item, index) => {
+            orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
+        });
+        
+        orderText += `%0A━━━━━━━━━━━━━━━━━━%0A💰 *TOTAL BILL: Rs ${total}*%0A━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
+        
+        window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
+    }
+</script>
+        
 </body>
 </html>
