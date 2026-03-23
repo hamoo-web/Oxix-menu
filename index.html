@@ -125,47 +125,116 @@
         </div>
 
         <h2 id="pizzas">Pizza Menu</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>CLASSIC FLAVORS</h3>
-                <p>Tikka, Fajita, Beef Supreme, Bihari Tikka</p>
-                <table class="pizza-table">
-                    <tr><td>Small (8") - 599</td><td><button class="add-btn" onclick="addToCart('S Classic Pizza', 599)">ADD</button></td></tr>
-                    <tr><td>Medium (12") - 1099</td><td><button class="add-btn" onclick="addToCart('M Classic Pizza', 1099)">ADD</button></td></tr>
-                    <tr><td>Large (14") - 1499</td><td><button class="add-btn" onclick="addToCart('L Classic Pizza', 1499)">ADD</button></td></tr>
-                    <tr><td>Family (18") - 1899</td><td><button class="add-btn" onclick="addToCart('F Classic Pizza', 1899)">ADD</button></td></tr>
-                </table>
+<div class="grid" style="grid-template-columns: 1fr; gap: 10px;">
+
+    <details class="card" style="cursor: pointer;">
+        <summary style="list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0;">1. CLASSIC FLAVORS</h3>
+                <p style="margin: 5px 0 0 0;">Tikka, Fajita, Beef Supreme, Bihari Tikka</p>
             </div>
-            <div class="card">
-                <h3>SPECIAL FLAVORS</h3>
-                <p>Oxix Special, Half & Half, Supreme Pizza</p>
-                <table class="pizza-table">
-                    <tr><td>Small (8") - 699</td><td><button class="add-btn" onclick="addToCart('S Special Pizza', 699)">ADD</button></td></tr>
-                    <tr><td>Medium (12") - 1199</td><td><button class="add-btn" onclick="addToCart('M Special Pizza', 1199)">ADD</button></td></tr>
-                    <tr><td>Large (14") - 1599</td><td><button class="add-btn" onclick="addToCart('L Special Pizza', 1599)">ADD</button></td></tr>
-                    <tr><td>Family (18") - 1999</td><td><button class="add-btn" onclick="addToCart('F Special Pizza', 1999)">ADD</button></td></tr>
-                </table>
-            </div>
-            <div class="card">
-                <h3>SIGNATURE FLAVORS</h3>
-                <p>Creamy Ranch, Dubai Special, Malai Boti</p>
-                <table class="pizza-table">
-                    <tr><td>Small (8") - 750</td><td><button class="add-btn" onclick="addToCart('S Signature Pizza', 750)">ADD</button></td></tr>
-                    <tr><td>Medium (12") - 1350</td><td><button class="add-btn" onclick="addToCart('M Signature Pizza', 1350)">ADD</button></td></tr>
-                    <tr><td>Large (14") - 1750</td><td><button class="add-btn" onclick="addToCart('L Signature Pizza', 1750)">ADD</button></td></tr>
-                    <tr><td>Family (18") - 2150</td><td><button class="add-btn" onclick="addToCart('F Signature Pizza', 2150)">ADD</button></td></tr>
-                </table>
-            </div>
-            <div class="card">
-                <h3>DONNER PIZZA</h3>
-                <p>Tex Mex Chicken & Three Sauce Blend</p>
-                <table class="pizza-table">
-                    <tr><td>Small (12") - 1300</td><td><button class="add-btn" onclick="addToCart('S Donner Pizza', 1300)">ADD</button></td></tr>
-                    <tr><td>Medium (14") - 1700</td><td><button class="add-btn" onclick="addToCart('M Donner Pizza', 1700)">ADD</button></td></tr>
-                    <tr><td>Large (18") - 2200</td><td><button class="add-btn" onclick="addToCart('L Donner Pizza', 2200)">ADD</button></td></tr>
-                </table>
-            </div>
+            <span style="color: var(--primary-yellow); font-size: 1.2rem;">▼</span>
+        </summary>
+        
+        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 1: CHOOSE FLAVOR</label>
+            <select id="flavor-classic" style="width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid var(--primary-yellow); border-radius: 5px; font-weight: bold;">
+                <option value="Chicken Tikka">Chicken Tikka</option>
+                <option value="Chicken Fajita">Chicken Fajita</option>
+                <option value="Beef Supreme">Beef Supreme</option>
+                <option value="Bihari Tikka">Bihari Tikka</option>
+            </select>
+
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 2: CHOOSE SIZE</label>
+            <table class="pizza-table">
+                <tr><td>Small (8") - 599</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-classic', 'Small', 599)">+ ADD</button></td></tr>
+                <tr><td>Medium (12") - 1099</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-classic', 'Medium', 1099)">+ ADD</button></td></tr>
+                <tr><td>Large (14") - 1499</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-classic', 'Large', 1499)">+ ADD</button></td></tr>
+                <tr><td>Family (18") - 1899</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-classic', 'Family', 1899)">+ ADD</button></td></tr>
+            </table>
         </div>
+    </details>
+
+    <details class="card" style="cursor: pointer;">
+        <summary style="list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0;">2. SPECIAL FLAVORS</h3>
+                <p style="margin: 5px 0 0 0;">Oxix Special, Half & Half, Supreme Pizza</p>
+            </div>
+            <span style="color: var(--primary-yellow); font-size: 1.2rem;">▼</span>
+        </summary>
+        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 1: CHOOSE FLAVOR</label>
+            <select id="flavor-special" style="width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid var(--primary-yellow); border-radius: 5px; font-weight: bold;">
+                <option value="Oxix Special">Oxix Special</option>
+                <option value="Half & Half">Half & Half</option>
+                <option value="Supreme Pizza">Supreme Pizza</option>
+            </select>
+
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 2: CHOOSE SIZE</label>
+            <table class="pizza-table">
+                <tr><td>Small (8") - 699</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-special', 'Small', 699)">+ ADD</button></td></tr>
+                <tr><td>Medium (12") - 1199</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-special', 'Medium', 1199)">+ ADD</button></td></tr>
+                <tr><td>Large (14") - 1599</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-special', 'Large', 1599)">+ ADD</button></td></tr>
+                <tr><td>Family (18") - 1999</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-special', 'Family', 1999)">+ ADD</button></td></tr>
+            </table>
+        </div>
+    </details>
+
+    <details class="card" style="cursor: pointer;">
+        <summary style="list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0;">3. SIGNATURE FLAVORS</h3>
+                <p style="margin: 5px 0 0 0;">Creamy Ranch, Dubai Special, Malai Boti</p>
+            </div>
+            <span style="color: var(--primary-yellow); font-size: 1.2rem;">▼</span>
+        </summary>
+        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 1: CHOOSE FLAVOR</label>
+            <select id="flavor-signature" style="width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid var(--primary-yellow); border-radius: 5px; font-weight: bold;">
+                <option value="Creamy Ranch">Creamy Ranch</option>
+                <option value="Dubai Special">Dubai Special</option>
+                <option value="Malai Boti">Malai Boti</option>
+            </select>
+
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 2: CHOOSE SIZE</label>
+            <table class="pizza-table">
+                <tr><td>Small (8") - 750</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-signature', 'Small', 750)">+ ADD</button></td></tr>
+                <tr><td>Medium (12") - 1350</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-signature', 'Medium', 1350)">+ ADD</button></td></tr>
+                <tr><td>Large (14") - 1750</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-signature', 'Large', 1750)">+ ADD</button></td></tr>
+                <tr><td>Family (18") - 2150</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-signature', 'Family', 2150)">+ ADD</button></td></tr>
+            </table>
+        </div>
+    </details>
+
+    <details class="card" style="cursor: pointer;">
+        <summary style="list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0;">4. DONNER PIZZA</h3>
+                <p style="margin: 5px 0 0 0;">Tex Mex Chicken & Three Sauce Blend</p>
+            </div>
+            <span style="color: var(--primary-yellow); font-size: 1.2rem;">▼</span>
+        </summary>
+        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 1: CHOOSE FLAVOR</label>
+            <select id="flavor-donner" style="width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid var(--primary-yellow); border-radius: 5px; font-weight: bold;">
+                <option value="Tex Mex Donner">Tex Mex Donner</option>
+                <option value="Classic Donner">Classic Donner</option>
+                <option value="Spicy Donner">Spicy Donner</option>
+            </select>
+
+            <label style="font-size: 0.8rem; color: var(--primary-yellow); font-weight: bold;">STEP 2: CHOOSE SIZE</label>
+            <table class="pizza-table">
+                <tr><td>Medium (12") - 1300</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-donner', 'Medium', 1300)">+ ADD</button></td></tr>
+                <tr><td>Large (14") - 1700</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-donner', 'Large', 1700)">+ ADD</button></td></tr>
+                <tr><td>Family (18") - 2200</td><td style="text-align: right;"><button class="add-btn" onclick="addPizzaToCart('flavor-donner', 'Family', 2200)">+ ADD</button></td></tr>
+            </table>
+        </div>
+    </details>
+
+</div>
+
+
 
         <h2 id="burgers">Burgers</h2>
         <div class="grid">
