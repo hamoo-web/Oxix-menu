@@ -420,9 +420,10 @@
         }
     }
 
-    // 2. Logic for Delivery/TakeAway/DineIn
+    // 2. UPGRADED Logic for Service Selection (Changes Payment Text)
     function setService(type) {
         selectedService = type;
+        
         // Update button colors
         document.getElementById('s-del').classList.toggle('active', type === 'Delivery');
         document.getElementById('s-take').classList.toggle('active', type === 'TakeAway');
@@ -431,6 +432,14 @@
         // Show/Hide address box
         const addressBox = document.getElementById('delivery-address');
         addressBox.style.display = (type === 'Delivery') ? 'block' : 'none';
+
+        // Update the Payment Text inside the modal
+        const payText = document.getElementById('payment-text');
+        if (type === 'Delivery') {
+            payText.innerText = "💵 CASH ON DELIVERY";
+        } else {
+            payText.innerText = "💵 PAY AT COUNTER";
+        }
     }
 
     // 3. Logic for Opening/Closing Checkout Modal
@@ -448,7 +457,6 @@
     function confirmFinalOrder() {
         let address = document.getElementById('delivery-address').value;
 
-        // Validation: If delivery is picked, address is required
         if (selectedService === 'Delivery' && address.length < 5) {
             alert("Please enter a valid delivery address!");
             return;
@@ -461,19 +469,14 @@
     function sendWhatsApp(address = "") {
         const phone = "923457588169";
         let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
-        
-        cart.forEach((item, index) => {
-            orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
-        });
-        
-        orderText += `%0A━━━━━━━━━━━━━━━━━━%0A`;
-        orderText += `📍 *SERVICE:* ${selectedService.toUpperCase()}%0A`;
-        
+       
         if (selectedService === 'Delivery') {
             orderText += `🏠 *ADDRESS:* ${address}%0A`;
+            orderText += `💳 *PAYMENT:* CASH ON DELIVERY%0A`;
+        } else {
+            orderText += `💳 *PAYMENT:* PAY AT COUNTER%0A`;
         }
         
-        orderText += `💳 *PAYMENT:* CASH ON DELIVERY%0A`;
         orderText += `💰 *TOTAL BILL: Rs ${total}*%0A`;
         orderText += `━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
         
@@ -486,7 +489,6 @@
         window.open("https://wa.me/?text=" + shareText, '_blank');
     }
 </script>
-
 
 <div id="paymentModal" class="modal">
     <div class="modal-content" style="margin: 5% auto; max-width: 420px;">
@@ -505,7 +507,7 @@
 
         <p style="text-align: left; font-size: 0.8rem; margin-bottom: 5px;">Payment Method:</p>
         <div style="background: #222; padding: 10px; border-radius: 8px; color: #25d366; font-weight: bold; text-align: center; border: 1px solid #333;">
-            💵 CASH ON DELIVERY
+            <span id="payment-text">💵 CASH ON DELIVERY</span>
         </div>
 
         <div style="background: #222; padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 15px;">
@@ -520,13 +522,5 @@
     </div>
 </div>
 
-
-
-        <button onclick="confirmFinalOrder()" class="wa-btn" style="padding: 15px; border-radius: 50px; border:none; color:white; font-weight:bold; width:100%; cursor:pointer; background:#25d366;">
-            CONFIRM & SEND WHATSAPP
-        </button>
-        <button onclick="closePayment()" style="background:none; color:#e74c3c; border:none; margin-top:10px; cursor:pointer;">Cancel</button>
-    </div>
-</div>
 </body>
 </html>
