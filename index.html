@@ -73,6 +73,30 @@
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 120px; opacity: 0;} to {bottom: 150px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 150px; opacity: 1;} to {bottom: 120px; opacity: 0;} }
+    /* --- Add this at the end of your <style> section --- */
+.modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); }
+.modal-content { background: #1a1a1a; margin: 15% auto; padding: 25px; border: 2px solid #ffcc00; width: 90%; max-width: 380px; border-radius: 15px; text-align: center; color: white; }
+.method-choice { display: flex; gap: 10px; margin: 15px 0; }
+.choice-btn { flex: 1; padding: 12px; border: 1px solid #ffcc00; background: transparent; color: white; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.choice-btn.active { background: #ffcc00; color: black; }
+.ep-input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; text-align: center; font-size: 1.1rem; }
+.choice-btn.active {
+    background: #ffcc00 !important; /* This makes the selected button yellow */
+    color: black !important;        /* This makes the text black */
+}
+.service-choice { display: flex; gap: 8px; margin-bottom: 15px; }
+.service-btn { 
+    flex: 1; padding: 10px; border: 1px solid #ffcc00; 
+    background: transparent; color: white; border-radius: 8px; 
+    cursor: pointer; font-size: 0.75rem; font-weight: bold;
+}
+.service-btn.active { background: #ffcc00; color: black; }
+.address-input { 
+    width: 100%; padding: 12px; margin-top: 10px; 
+    background: #222; border: 1px solid #444; 
+    color: white; border-radius: 8px; display: none; 
+}
+
     </style>
 </head>
 <body>
@@ -253,8 +277,8 @@
             <div class="card"><h3>CHICKEN SHAWARMA</h3><div class="price-row"><span class="price-tag">330/-</span><button class="add-btn" onclick="addToCart('Chicken Shawarma', 330)">+ ADD</button></div></div>
             <div class="card"><h3>ZINGER SHAWARMA</h3><div class="price-row"><span class="price-tag">380/-</span><button class="add-btn" onclick="addToCart('Zinger Shawarma', 380)">+ ADD</button></div></div>
             <div class="card"><h3>ZINGER WRAP</h3><div class="price-row"><span class="price-tag">490/-</span><button class="add-btn" onclick="addToCart('Zinger Wrap', 490)">+ ADD</button></div></div>
-            <div class="card"><h3>DONNER SHAWARMA</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Donner Shawarma', 500)">+ ADD</button></div></div>
-            <div class="card"><h3>ARABIAN WRAP</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Arabian Wrap', 500)">+ ADD</button></div></div>
+              <div class="card"><h3>DONNER SHAWARMA</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Donner Shawarma', 500)">+ ADD</button></div></div>
+              <div class="card"><h3>ARABIAN WRAP</h3><div class="price-row"><span class="price-tag">500/-</span><button class="add-btn" onclick="addToCart('Arabian Wrap', 500)">+ ADD</button></div></div>
             <div class="card"><h3>TURKISH WRAP</h3><div class="price-row"><span class="price-tag">550/-</span><button class="add-btn" onclick="addToCart('Turkish Wrap', 550)">+ ADD</button></div></div>
             <div class="card"><h3>OPEN PLATTER</h3><div class="price-row"><span class="price-tag">600/-</span><button class="add-btn" onclick="addToCart('Open Platter Shawarma', 600)">+ ADD</button></div></div>
         </div>
@@ -347,35 +371,36 @@
             <a href="tel:+923457588169" class="btn-float call-btn">📞 CALL NOW</a>
             <button onclick="clearCart()" class="btn-float reset-btn">🗑️ RESET</button>
         </div>
-        <button onclick="sendWhatsApp()" class="btn-float wa-btn">
+        <button onclick="shareApp()" class="btn-float" style="background: #3498db;">
+    🔗 SHARE APP
+</button>
+
+        <button onclick="openCheckout()" class="btn-float wa-btn">
             🟢 SEND ORDER (<span id="cart-count">0</span>)
         </button>
     </div>
 <script>
     let cart = [];
     let total = 0;
+    let selectedMethod = 'COD'; 
+    let selectedService = 'Delivery'; 
 
-    // 1. New function for Pizzas to capture the selected flavor
     function addPizzaToCart(selectId, size, price) {
         const flavor = document.getElementById(selectId).value;
-        const fullName = `${flavor} Pizza (${size})`; // Combines Flavor + Size
+        const fullName = `${flavor} Pizza (${size})`; 
         addToCart(fullName, price);
     }
 
-    // 2. Standard function for all items
     function addToCart(name, price) {
         cart.push({ name: name, price: price });
         total += price;
-        
         document.getElementById('cart-count').innerText = cart.length;
-        
         const toast = document.getElementById('toast');
         toast.innerText = `Added: ${name} ✅`;
         toast.className = "show";
         setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
     }
 
-    // 3. Function to clear the cart
     function clearCart() {
         if (cart.length === 0) return;
         if (confirm("Clear your entire order?")) {
@@ -386,13 +411,55 @@
         }
     }
 
-    // 4. Enhanced WhatsApp function
-    function sendWhatsApp() {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
+    // --- NEW APP LOGIC ---
+
+    function setService(type) {
+        selectedService = type;
+        document.getElementById('s-del').classList.toggle('active', type === 'Delivery');
+        document.getElementById('s-take').classList.toggle('active', type === 'TakeAway');
+        document.getElementById('s-dine').classList.toggle('active', type === 'DineIn');
+        
+        const addressBox = document.getElementById('delivery-address');
+        addressBox.style.display = (type === 'Delivery') ? 'block' : 'none';
+    }
+
+    function selectMethod(method) {
+        selectedMethod = method;
+        document.getElementById('btn-cod').classList.toggle('active', method === 'COD');
+        document.getElementById('btn-ep').classList.toggle('active', method === 'EP');
+        document.getElementById('ep-field').style.display = (method === 'EP') ? 'block' : 'none';
+    }
+
+    function openCheckout() {
+        if (cart.length === 0) { alert("Your cart is empty!"); return; }
+        document.getElementById('modal-total').innerText = `Rs. ${total}`;
+        document.getElementById('paymentModal').style.display = "block";
+    }
+
+    function closePayment() { 
+        document.getElementById('paymentModal').style.display = "none"; 
+    }
+
+    function confirmFinalOrder() {
+        let tid = null;
+        let address = document.getElementById('delivery-address').value;
+
+        if (selectedService === 'Delivery' && address.length < 5) {
+            alert("Please enter a valid delivery address!");
             return;
         }
 
+        if (selectedMethod === 'EP') {
+            tid = document.getElementById('transID').value;
+            if (tid.length < 5) {
+                alert("Please enter Transaction ID (TID) for Online Payment.");
+                return;
+            }
+        }
+        sendWhatsApp(tid, address);
+    }
+
+    function sendWhatsApp(tid = null, address = "") {
         const phone = "923457588169";
         let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
         
@@ -400,11 +467,59 @@
             orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
         });
         
-        orderText += `%0A━━━━━━━━━━━━━━━━━━%0A💰 *TOTAL BILL: Rs ${total}*%0A━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
+        orderText += `%0A━━━━━━━━━━━━━━━━━━%0A`;
+        orderText += `📍 *SERVICE:* ${selectedService.toUpperCase()}%0A`;
+        if (selectedService === 'Delivery') orderText += `🏠 *ADDRESS:* ${address}%0A`;
+        orderText += `💳 *PAYMENT:* ${tid ? 'PAID ONLINE (TID: '+tid+')' : 'CASH ON DELIVERY'}%0A`;
+        orderText += `💰 *TOTAL BILL: Rs ${total}*%0A`;
+        orderText += `━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
         
         window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
     }
+    function shareApp() {
+    const shareText = "🔥 *OXIX - Fuel Your Cravings!* 🔥%0ACheck out our official menu and order online here: %0Ahttps://hamoo-web.github.io/Oxix-menu/";
+    window.open("https://wa.me/?text=" + shareText, '_blank');
+}
+
 </script>
-        
+
+
+<div id="paymentModal" class="modal">
+    <div class="modal-content" style="margin: 5% auto; max-width: 420px;">
+        <h2 style="color: #ffcc00; margin-bottom: 15px;">CHECKOUT</h2>
+
+        <p style="text-align: left; font-size: 0.8rem; margin-bottom: 5px;">Select Service:</p>
+        <div class="service-choice">
+            <button class="service-btn active" id="s-del" onclick="setService('Delivery')">🛵 Delivery</button>
+            <button class="service-btn" id="s-take" onclick="setService('TakeAway')">🛍️ Take Away</button>
+            <button class="service-btn" id="s-dine" onclick="setService('DineIn')">🍽️ Dine In</button>
+        </div>
+
+        <textarea id="delivery-address" class="address-input" placeholder="Enter Full Delivery Address..." rows="2" style="display: block;"></textarea>
+
+        <hr style="border: 0.5px solid #333; margin: 15px 0;">
+
+        <p style="text-align: left; font-size: 0.8rem; margin-bottom: 5px;">Payment Method:</p>
+        <div class="method-choice">
+            <button class="choice-btn active" id="btn-cod" onclick="selectMethod('COD')">💵 CASH</button>
+            <button class="choice-btn" id="btn-ep" onclick="selectMethod('EP')">💳 ONLINE</button>
+        </div>
+
+        <div id="ep-field" style="display: none; background: #222; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed #ffcc00;">
+            <p style="font-size: 0.75rem; text-align: left;"><strong>Transfer to:</strong> 0345 923457588169 (Mirza Naeem Yousaf)</p>
+            <input type="text" id="transID" class="ep-input" placeholder="Enter Transaction ID (TID)" style="margin-top: 8px;">
+        </div>
+
+        <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <span style="color: #ffcc00">Total Bill:</span>
+            <span id="modal-total" style="font-size: 1.3rem; display: block; font-weight: bold;">Rs. 0</span>
+        </div>
+
+        <button onclick="confirmFinalOrder()" class="wa-btn" style="padding: 15px; border-radius: 50px; border:none; color:white; font-weight:bold; width:100%; cursor:pointer; background:#25d366;">
+            CONFIRM & SEND WHATSAPP
+        </button>
+        <button onclick="closePayment()" style="background:none; color:#e74c3c; border:none; margin-top:10px; cursor:pointer;">Cancel</button>
+    </div>
+</div>
 </body>
 </html>
