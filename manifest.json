@@ -1,0 +1,16 @@
+{
+  "name": "OXIX Official Menu",
+  "short_name": "OXIX",
+  "description": "Fuel Your Cravings - Official Ordering App",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ffcc00",
+  "icons": [
+    {
+      "src": "https://hamoo-web.github.io/Oxix-menu/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
