@@ -464,25 +464,39 @@
 
         sendWhatsApp(address);
     }
-
     // 5. Sending the Order to WhatsApp
-    function sendWhatsApp(address = "") {
-        const phone = "923457588169";
-        let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
-       
-        if (selectedService === 'Delivery') {
-            orderText += `🏠 *ADDRESS:* ${address}%0A`;
-            orderText += `💳 *PAYMENT:* CASH ON DELIVERY%0A`;
-        } else {
-            orderText += `💳 *PAYMENT:* PAY AT COUNTER%0A`;
-        }
-        
-        orderText += `💰 *TOTAL BILL: Rs ${total}*%0A`;
-        orderText += `━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
-        
-        window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
+function sendWhatsApp(address = "") {
+    const phone = "923457588169";
+    let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
+    // Add this loop right after the orderText header
+cart.forEach((item, index) => {
+    orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
+});
+    
+    
+    // --- THIS PART WAS MISSING ---
+    // This loop adds each item name and price to the message
+    cart.forEach((item, index) => {
+        orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
+    });
+    // -----------------------------
+    
+    orderText += `%0A━━━━━━━━━━━━━━━━━━%0A`;
+    orderText += `📍 *SERVICE:* ${selectedService.toUpperCase()}%0A`;
+    
+    if (selectedService === 'Delivery') {
+        orderText += `🏠 *ADDRESS:* ${address}%0A`;
+        orderText += `💳 *PAYMENT:* CASH ON DELIVERY%0A`;
+    } else {
+        orderText += `💳 *PAYMENT:* PAY AT COUNTER%0A`;
     }
-
+    
+    orderText += `💰 *TOTAL BILL: Rs ${total}*%0A`;
+    orderText += `━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
+    
+    window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
+}
+    
     // 6. Share App Logic
     function shareApp() {
         const shareText = "🔥 *OXIX - Fuel Your Cravings!* 🔥%0ACheck out our official menu and order online here: %0Ahttps://hamoo-web.github.io/Oxix-menu/";
