@@ -473,14 +473,6 @@ cart.forEach((item, index) => {
     orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
 });
     
-    
-    // --- THIS PART WAS MISSING ---
-    // This loop adds each item name and price to the message
-    cart.forEach((item, index) => {
-        orderText += `*${index + 1}.* ${item.name} - Rs ${item.price}%0A`;
-    });
-    // -----------------------------
-    
     orderText += `%0A━━━━━━━━━━━━━━━━━━%0A`;
     orderText += `📍 *SERVICE:* ${selectedService.toUpperCase()}%0A`;
     
