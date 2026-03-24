@@ -387,12 +387,13 @@
             🟢 SEND ORDER (<span id="cart-count">0</span>)
         </button>
     </div>
+
 <script>
     let cart = [];
     let total = 0;
-    let selectedMethod = 'COD'; 
-    let selectedService = 'Delivery'; 
+    let selectedService = 'Delivery'; // Default
 
+    // 1. Logic for Adding Items to Cart
     function addPizzaToCart(selectId, size, price) {
         const flavor = document.getElementById(selectId).value;
         const fullName = `${flavor} Pizza (${size})`; 
@@ -419,25 +420,20 @@
         }
     }
 
-    // --- NEW APP LOGIC ---
-
+    // 2. Logic for Delivery/TakeAway/DineIn
     function setService(type) {
         selectedService = type;
+        // Update button colors
         document.getElementById('s-del').classList.toggle('active', type === 'Delivery');
         document.getElementById('s-take').classList.toggle('active', type === 'TakeAway');
         document.getElementById('s-dine').classList.toggle('active', type === 'DineIn');
         
+        // Show/Hide address box
         const addressBox = document.getElementById('delivery-address');
         addressBox.style.display = (type === 'Delivery') ? 'block' : 'none';
     }
 
-    function selectMethod(method) {
-        selectedMethod = method;
-        document.getElementById('btn-cod').classList.toggle('active', method === 'COD');
-        document.getElementById('btn-ep').classList.toggle('active', method === 'EP');
-        document.getElementById('ep-field').style.display = (method === 'EP') ? 'block' : 'none';
-    }
-
+    // 3. Logic for Opening/Closing Checkout Modal
     function openCheckout() {
         if (cart.length === 0) { alert("Your cart is empty!"); return; }
         document.getElementById('modal-total').innerText = `Rs. ${total}`;
@@ -448,26 +444,21 @@
         document.getElementById('paymentModal').style.display = "none"; 
     }
 
+    // 4. Final Confirmation Logic
     function confirmFinalOrder() {
-        let tid = null;
         let address = document.getElementById('delivery-address').value;
 
+        // Validation: If delivery is picked, address is required
         if (selectedService === 'Delivery' && address.length < 5) {
             alert("Please enter a valid delivery address!");
             return;
         }
 
-        if (selectedMethod === 'EP') {
-            tid = document.getElementById('transID').value;
-            if (tid.length < 5) {
-                alert("Please enter Transaction ID (TID) for Online Payment.");
-                return;
-            }
-        }
-        sendWhatsApp(tid, address);
+        sendWhatsApp(address);
     }
 
-    function sendWhatsApp(tid = null, address = "") {
+    // 5. Sending the Order to WhatsApp
+    function sendWhatsApp(address = "") {
         const phone = "923457588169";
         let orderText = "🔥 *OXIX NEW ORDER* 🔥%0A%0A";
         
@@ -477,18 +468,23 @@
         
         orderText += `%0A━━━━━━━━━━━━━━━━━━%0A`;
         orderText += `📍 *SERVICE:* ${selectedService.toUpperCase()}%0A`;
-        if (selectedService === 'Delivery') orderText += `🏠 *ADDRESS:* ${address}%0A`;
-        orderText += `💳 *PAYMENT:* ${tid ? 'PAID ONLINE (TID: '+tid+')' : 'CASH ON DELIVERY'}%0A`;
+        
+        if (selectedService === 'Delivery') {
+            orderText += `🏠 *ADDRESS:* ${address}%0A`;
+        }
+        
+        orderText += `💳 *PAYMENT:* CASH ON DELIVERY%0A`;
         orderText += `💰 *TOTAL BILL: Rs ${total}*%0A`;
         orderText += `━━━━━━━━━━━━━━━━━━%0A%0APlease confirm my order!`;
         
         window.open("https://wa.me/" + phone + "?text=" + orderText, '_blank');
     }
-    function shareApp() {
-    const shareText = "🔥 *OXIX - Fuel Your Cravings!* 🔥%0ACheck out our official menu and order online here: %0Ahttps://hamoo-web.github.io/Oxix-menu/";
-    window.open("https://wa.me/?text=" + shareText, '_blank');
-}
 
+    // 6. Share App Logic
+    function shareApp() {
+        const shareText = "🔥 *OXIX - Fuel Your Cravings!* 🔥%0ACheck out our official menu and order online here: %0Ahttps://hamoo-web.github.io/Oxix-menu/";
+        window.open("https://wa.me/?text=" + shareText, '_blank');
+    }
 </script>
 
 
@@ -508,20 +504,23 @@
         <hr style="border: 0.5px solid #333; margin: 15px 0;">
 
         <p style="text-align: left; font-size: 0.8rem; margin-bottom: 5px;">Payment Method:</p>
-        <div class="method-choice">
-            <button class="choice-btn active" id="btn-cod" onclick="selectMethod('COD')">💵 CASH</button>
-            <button class="choice-btn" id="btn-ep" onclick="selectMethod('EP')">💳 ONLINE</button>
+        <div style="background: #222; padding: 10px; border-radius: 8px; color: #25d366; font-weight: bold; text-align: center; border: 1px solid #333;">
+            💵 CASH ON DELIVERY
         </div>
 
-        <div id="ep-field" style="display: none; background: #222; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed #ffcc00;">
-            <p style="font-size: 0.75rem; text-align: left;"><strong>Transfer to:</strong> 0345 7588169 (Mirza Naeem Yousaf)</p>
-            <input type="text" id="transID" class="ep-input" placeholder="Enter Transaction ID (TID)" style="margin-top: 8px;">
-        </div>
-
-        <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+        <div style="background: #222; padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 15px;">
             <span style="color: #ffcc00">Total Bill:</span>
             <span id="modal-total" style="font-size: 1.3rem; display: block; font-weight: bold;">Rs. 0</span>
         </div>
+
+        <button onclick="confirmFinalOrder()" class="wa-btn" style="padding: 15px; border-radius: 50px; border:none; color:white; font-weight:bold; width:100%; cursor:pointer; background:#25d366;">
+            CONFIRM & SEND WHATSAPP
+        </button>
+        <button onclick="closePayment()" style="background:none; color:#e74c3c; border:none; margin-top:10px; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+
 
         <button onclick="confirmFinalOrder()" class="wa-btn" style="padding: 15px; border-radius: 50px; border:none; color:white; font-weight:bold; width:100%; cursor:pointer; background:#25d366;">
             CONFIRM & SEND WHATSAPP
